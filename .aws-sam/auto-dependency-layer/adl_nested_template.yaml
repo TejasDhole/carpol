@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS SAM CLI Nested Stack for Auto Dependency Layer Creation
+Metadata:
+  SamCliInfo: 1.113.0
+  key: AWS SAM CLI sync command
+Outputs:
+  carpolFunction746eafb8DepLayer:
+    Value:
+      Ref: carpolFunction746eafb8DepLayer
+Resources:
+  carpolFunction746eafb8DepLayer:
+    Metadata:
+      CreatedBy: AWS SAM CLI sync command
+    Properties:
+      CompatibleRuntimes:
+      - java11
+      ContentUri: E:\aws projects\carpol\.aws-sam\auto-dependency-layer\carpolFunction746eafb8DepLayer
+      Description: Auto created layer for dependencies of function carpolFunction
+      LayerName: carpoolapp6a871738-carpolFunction746eafb8-DepLayer
+      RetentionPolicy: Delete
+    Type: AWS::Serverless::LayerVersion
+Transform: AWS::Serverless-2016-10-31
