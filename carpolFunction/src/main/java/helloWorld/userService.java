@@ -21,11 +21,19 @@ public class userService {
         List<User> users = dynamoDBMapper.scan(User.class, new DynamoDBScanExpression());
         return new Gson().toJson(users);
     }
+    public static String getUserByUserId(String userId) {
+        User user = dynamoDBMapper.load(User.class, userId);
+        if (user != null) {
+            return new Gson().toJson(user);
+        } else {
+            return "User not found";
+        }
+    }
 
     public static String createUser(String requestBody) {
         User user = new Gson().fromJson(requestBody, User.class);
         dynamoDBMapper.save(user);
-        return "User created: " + user.getUserId();
+        return "User created: " + new Gson().toJson(user);
     }
     public static String updateUser(String requestBody) {
         User updatedUser = new Gson().fromJson(requestBody, User.class);
@@ -45,14 +53,14 @@ public class userService {
     }
 
 
-    public static String deleteUser(String requestBody) {
-        User userToDelete = new Gson().fromJson(requestBody, User.class);
-        User existingUser = dynamoDBMapper.load(User.class, userToDelete.getUserId());
+    public static String deleteUser(String userId) {
+        User existingUser = dynamoDBMapper.load(User.class, userId);
         if (existingUser != null) {
             dynamoDBMapper.delete(existingUser);
-            return "User deleted: " + existingUser.getUserId();
+            return "User deleted: " + userId;
         } else {
             return "User not found";
         }
     }
+
 }

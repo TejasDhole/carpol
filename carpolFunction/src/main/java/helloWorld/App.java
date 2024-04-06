@@ -51,16 +51,19 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         if (resourcePath.equals("/user") && httpMethod.equals("GET")) {
             output = userService.getUsers();
              statusCode = 200;
-            // } else if (resourcePath.equals("/user") && httpMethod.equals("POST")) {
-            //      postUser(event, context);
+             } else if (resourcePath.equals("/user") && httpMethod.equals("POST")) {
+                    output = userService.createUser(input.getBody());
+                    statusCode = 201;
              } else if (resourcePath.startsWith("/user/") && httpMethod.equals("GET")) {
             String userId = resourcePath.substring("/user/".length());
-                  output = userId;
+                  output = userService.getUserByUserId(userId);
                     statusCode = 200;
             // } else if (resourcePath.startsWith("/user/") && httpMethod.equals("PUT")) {
             //      updateUser(event, context);
-            // } else if (resourcePath.startsWith("/user/") && httpMethod.equals("DELETE")) {
-            //     deleteUser(event, context);
+             } else if (resourcePath.startsWith("/user/") && httpMethod.equals("DELETE")) {
+                    String userId = resourcePath.substring("/user/".length());
+                    output = userService.deleteUser(userId);
+                    statusCode = 200;
         } else {
             output = "Invalid HTTP Method";
             statusCode = 400;
